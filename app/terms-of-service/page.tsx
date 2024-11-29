@@ -12,7 +12,7 @@ export default function TermsOfServicePage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
             <p className="mb-4">
-              By accessing or using PawHealth AI's services, you agree to be bound by these Terms of Service.
+              By accessing or using PawHealth AI&apos;s services, you agree to be bound by these Terms of Service.
               If you do not agree to these terms, please do not use our services.
             </p>
           </section>

@@ -188,7 +188,7 @@ export default function ServicesPage() {
       <div className="mt-16 bg-gray-50 rounded-2xl p-8 text-center">
         <h2 className="text-2xl font-bold mb-4">Need Help Choosing a Service?</h2>
         <p className="text-gray-600 mb-6">
-          Our pet care specialists are here to help you find the perfect solution for your pet's needs.
+          Our pet care specialists are here to help you find the perfect solution for your pet&apos;s needs.
         </p>
         <button className="px-6 py-3 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors">
           Contact Us

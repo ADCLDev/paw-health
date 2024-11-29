@@ -2,6 +2,7 @@
 'use client'
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 import { 
   Camera, 
   Upload, 
@@ -74,18 +75,30 @@ export default function Home() {
 
   const startCamera = async () => {
     try {
+      console.log('Starting camera...');
+      setShowCamera(true); // Set this first
+      
       const stream = await navigator.mediaDevices.getUserMedia({ 
         video: { facingMode: 'environment' } 
       });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        streamRef.current = stream;
-      }
-      setShowCamera(true);
+      console.log('Got stream:', stream);
+      
+      // Small delay to ensure ref is available
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          streamRef.current = stream;
+          console.log('Video element set up successfully');
+        } else {
+          console.log('Video ref still not available');
+        }
+      }, 100);
+  
       setError('');
     } catch (err) {
       setError('Unable to access camera. Please check permissions.');
       console.error('Camera error:', err);
+      setShowCamera(false);
     }
   };
 
@@ -93,6 +106,9 @@ export default function Home() {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(track => track.stop());
       streamRef.current = null;
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
     }
     setShowCamera(false);
   };
@@ -169,81 +185,87 @@ export default function Home() {
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-          {showCamera ? (
-            <div className="space-y-4">
-              <video 
-                ref={videoRef}
-                autoPlay 
-                playsInline
-                className="max-h-96 mx-auto rounded-lg"
-              />
-              <div className="flex justify-center gap-4">
-                <button
-                  type="button"
-                  onClick={capturePhoto}
-                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-                >
-                  Take Photo
-                </button>
-                <button
-                  type="button"
-                  onClick={stopCamera}
-                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          ) : !preview ? (
-            <div className="space-y-4">
-              <div className="flex flex-col items-center gap-4">
-                <div className="text-gray-600">Choose a method to add a photo:</div>
-                <div className="flex gap-4">
-                  <button
-                    type="button"
-                    onClick={startCamera}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                  >
-                    <Camera size={20} />
-                    Take Photo
-                  </button>
-                  <label
-                    htmlFor="imageUpload"
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600"
-                  >
-                    <Upload size={20} />
-                    Upload Photo
-                  </label>
-                </div>
-                <input
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  onChange={handleImageChange}
-                  className="hidden"
-                  id="imageUpload"
-                />
-              </div>
-              <div className="text-sm text-gray-500 mt-2">
-                Supported formats: JPEG, PNG, WebP (max 4MB)
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <img
-                src={preview}
-                alt="Preview"
-                className="max-h-96 mx-auto rounded-lg"
-              />
+        {showCamera ? (
+          <div className="space-y-4 bg-gray-100 p-4 rounded-lg border">
+            <video 
+              ref={videoRef}
+              autoPlay 
+              playsInline
+              onLoadedMetadata={() => console.log('Video metadata loaded')}
+              className="w-full h-[400px] mx-auto rounded-lg bg-gray-100 object-cover"
+            />
+            <div className="flex justify-center gap-4">
               <button
                 type="button"
-                onClick={resetImage}
-                className="flex items-center gap-2 text-red-500 hover:text-red-600 mx-auto"
+                onClick={capturePhoto}
+                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
               >
-                <X size={20} />
-                Remove Photo
+                Take Photo
+              </button>
+              <button
+                type="button"
+                onClick={stopCamera}
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+              >
+                Cancel
               </button>
             </div>
-          )}
+          </div>
+        ) : !preview ? (
+          <div className="space-y-4">
+            <div className="flex flex-col items-center gap-4">
+              <div className="text-gray-600">Choose a method to add a photo:</div>
+              <div className="flex gap-4">
+                <button
+                  type="button"
+                  onClick={startCamera}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                >
+                  <Camera size={20} />
+                  Take Photo
+                </button>
+                <label
+                  htmlFor="imageUpload"
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600"
+                >
+                  <Upload size={20} />
+                  Upload Photo
+                </label>
+              </div>
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleImageChange}
+                className="hidden"
+                id="imageUpload"
+              />
+            </div>
+            <div className="text-sm text-gray-500 mt-2">
+              Supported formats: JPEG, PNG, WebP (max 4MB)
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="relative w-full max-h-96 mx-auto">
+              <Image
+                src={preview}
+                alt="Preview"
+                width={800}
+                height={600}
+                className="mx-auto rounded-lg object-contain"
+                style={{ maxHeight: '384px' }} // equivalent to max-h-96
+              />
+            </div>
+            <button
+              type="button"
+              onClick={resetImage}
+              className="flex items-center gap-2 text-red-500 hover:text-red-600 mx-auto"
+            >
+              <X size={20} />
+              Remove Photo
+            </button>
+          </div>
+        )}
         </div>
 
         <button
@@ -267,7 +289,7 @@ export default function Home() {
           <div className="whitespace-pre-wrap">{analysis}</div>
           <div className="mt-4 text-sm text-gray-500">
             Note: This is an AI-powered initial assessment and should not replace professional veterinary care. 
-            If you have concerns about your pet's health, please consult a veterinarian.
+            If you have concerns about your pet&apos;s health, please consult a veterinarian.
           </div>
         </div>
       )}
@@ -279,7 +301,7 @@ export default function Home() {
           <HowItWorksCard
             icon={CameraIcon}
             title="Take a Photo"
-            description="Upload an image or use your camera to take a clear photo of your pet's condition"
+            description="Upload an image or use your camera to take a clear photo of your pet&apos;s condition"
           />
           <HowItWorksCard
             icon={Brain}
@@ -289,7 +311,7 @@ export default function Home() {
           <HowItWorksCard
             icon={Stethoscope}
             title="Get Assessment"
-            description="Receive a detailed initial assessment of your pet's visible health conditions"
+            description="Receive a detailed initial assessment of your pet&apos;s visible health conditions"
           />
           <HowItWorksCard
             icon={Info}
@@ -302,7 +324,7 @@ export default function Home() {
             <ShieldAlert className="text-yellow-600 mt-1 flex-shrink-0" />
             <div className="text-sm text-yellow-700">
               <strong>Important:</strong> This tool provides initial assessments only and is not a substitute for professional veterinary care. 
-              Always consult with a qualified veterinarian for proper diagnosis and treatment of your pet's health conditions.
+              Always consult with a qualified veterinarian for proper diagnosis and treatment of your pet&apos;s health conditions.
             </div>
           </div>
         </div>

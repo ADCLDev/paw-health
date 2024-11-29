@@ -3,9 +3,6 @@
 
 import { useState } from 'react';
 import { 
-  Stethoscope, 
-  Upload, 
-  Camera,
   Clock, 
   CheckCircle2, 
   AlertTriangle,
@@ -110,7 +107,7 @@ export default function HealthAnalysisPage() {
         <div className="max-w-3xl">
           <h1 className="text-4xl font-bold mb-4">Pet Health Analysis</h1>
           <p className="text-xl mb-6 opacity-90">
-            Get instant AI-powered analysis of your pet's health conditions using just a photo.
+            Get instant AI-powered analysis of your pet&apos;s health conditions using just a photo.
           </p>
           <button className="inline-flex items-center bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors">
             Try Analysis Now
@@ -143,7 +140,7 @@ export default function HealthAnalysisPage() {
           <div className="prose max-w-none">
             <h2 className="text-2xl font-bold mb-4">About Health Analysis</h2>
             <p className="text-gray-600 mb-6">
-              Our AI-powered health analysis service provides quick, accurate insights into your pet's health conditions.
+              Our AI-powered health analysis service provides quick, accurate insights into your pet&apos;s health conditions.
               By analyzing photos of your pet, we can help identify potential health issues and provide recommendations
               for next steps.
             </p>
@@ -265,7 +262,7 @@ export default function HealthAnalysisPage() {
       <div className="mt-16 text-center">
         <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
         <p className="text-gray-600 mb-6">
-          Try our health analysis service today and get insights into your pet's health.
+          Try our health analysis service today and get insights into your pet&apos;s health.
         </p>
         <button className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors">
           Start Free Analysis

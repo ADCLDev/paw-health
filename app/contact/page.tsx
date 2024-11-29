@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { 
   Mail, 
   Phone, 
-  MapPin, 
-  MessageCircle, 
   Clock,
   Send
 } from 'lucide-react';
@@ -54,7 +52,7 @@ export default function ContactPage() {
       <div className="text-center mb-16">
         <h1 className="text-4xl font-bold mb-6">Contact Us</h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Have questions about our services? We're here to help and would love to hear from you.
+          Have questions about our services? We&apos;re here to help and would love to hear from you.
         </p>
       </div>
 
@@ -177,7 +175,7 @@ export default function ContactPage() {
             <div>
               <h3 className="font-semibold mb-2">Do you offer refunds?</h3>
               <p className="text-gray-600">
-                Yes, we offer a 30-day money-back guarantee if you're not satisfied with our services.
+                Yes, we offer a 30-day money-back guarantee if you&apos;re not satisfied with our services.
               </p>
             </div>
             <div>

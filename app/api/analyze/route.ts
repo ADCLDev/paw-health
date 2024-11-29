@@ -1,5 +1,15 @@
-// app/api/analyze/route.ts
 import { GoogleGenerativeAI } from "@google/generative-ai";
+
+// Define interfaces for error types
+interface GenerativeError {
+  message: string;
+  details?: unknown;
+}
+
+interface ApiError extends Error {
+  status?: number;
+  code?: string;
+}
 
 export async function POST(request: Request) {
   try {
@@ -64,23 +74,25 @@ export async function POST(request: Request) {
 
       const response = await result.response;
       return Response.json({ analysis: response.text() });
-    } catch (modelError: any) {
-      console.error('Gemini API error:', modelError);
+    } catch (modelError) {
+      const error = modelError as GenerativeError;
+      console.error('Gemini API error:', error);
       return Response.json(
         { 
-          error: `AI model error: ${modelError.message || 'Failed to analyze the image'}. Please try again.`,
-          details: modelError
+          error: `AI model error: ${error.message || 'Failed to analyze the image'}. Please try again.`,
+          details: error
         },
         { status: 500 }
       );
     }
     
-  } catch (error: any) {
-    console.error('Analysis error:', error);
+  } catch (error) {
+    const err = error as ApiError;
+    console.error('Analysis error:', err);
     return Response.json(
       { 
         error: 'Failed to process the image. Please try again.',
-        details: error.message
+        details: err.message
       },
       { status: 500 }
     );

@@ -61,7 +61,7 @@ const PricingPage = () => {
             Simple, Transparent Pricing
           </h1>
           <p className="text-xl text-gray-600">
-            Choose the perfect plan for your pet's health needs
+            Choose the perfect plan for your pet&apos;s health needs
           </p>
         </div>
 

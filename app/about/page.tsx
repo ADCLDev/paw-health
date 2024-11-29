@@ -1,4 +1,3 @@
-// app/about/page.tsx
 'use client';
 
 import { 
@@ -11,27 +10,6 @@ import {
   PawPrint
 } from 'lucide-react';
 
-const TeamMember = ({ 
-  name, 
-  role, 
-  image 
-}: { 
-  name: string; 
-  role: string; 
-  image: string;
-}) => (
-  <div className="flex flex-col items-center text-center">
-    <div className="w-32 h-32 rounded-full overflow-hidden mb-4">
-      <img 
-        src={image} 
-        alt={name} 
-        className="w-full h-full object-cover"
-      />
-    </div>
-    <h3 className="font-semibold text-lg">{name}</h3>
-    <p className="text-gray-600">{role}</p>
-  </div>
-);
 
 const StatCard = ({ 
   icon: Icon, 
@@ -57,36 +35,13 @@ export default function AboutPage() {
     { icon: Shield, value: "24/7", label: "Support Available" }
   ];
 
-  const team = [
-    {
-      name: "Dr. Sarah Wilson",
-      role: "Chief Veterinary Officer",
-      image: "/api/placeholder/150/150"
-    },
-    {
-      name: "Mike Johnson",
-      role: "AI Research Lead",
-      image: "/api/placeholder/150/150"
-    },
-    {
-      name: "Dr. Emily Chen",
-      role: "Pet Health Specialist",
-      image: "/api/placeholder/150/150"
-    },
-    {
-      name: "David Thompson",
-      role: "Technology Director",
-      image: "/api/placeholder/150/150"
-    }
-  ];
-
   return (
     <div className="container mx-auto px-4 py-12 max-w-7xl">
       {/* Hero Section */}
       <div className="text-center mb-16">
         <h1 className="text-4xl font-bold mb-6">About PawHealth AI</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          We're on a mission to revolutionize pet healthcare through AI technology,
+          We&apos;re on a mission to revolutionize pet healthcare through AI technology,
           making it more accessible, efficient, and reliable for pet parents worldwide.
         </p>
       </div>
@@ -107,7 +62,7 @@ export default function AboutPage() {
           </h2>
           <p className="text-gray-600">
             To empower pet parents with advanced AI technology that helps them make
-            informed decisions about their pets' health and well-being, while supporting
+            informed decisions about their pets&apos; health and well-being, while supporting
             veterinarians in providing the best possible care.
           </p>
         </div>
@@ -123,16 +78,6 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Team Section */}
-      {/* <div className="mb-16">
-        <h2 className="text-2xl font-bold text-center mb-8">Our Team</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {team.map((member, index) => (
-            <TeamMember key={index} {...member} />
-          ))}
-        </div>
-      </div> */}
-
       {/* Values Section */}
       <div className="bg-gray-50 rounded-2xl p-8 mb-16">
         <h2 className="text-2xl font-bold text-center mb-8">Our Values</h2>
@@ -141,7 +86,7 @@ export default function AboutPage() {
             <Heart className="w-12 h-12 mx-auto mb-4 text-rose-500" />
             <h3 className="font-semibold text-xl mb-2">Pet-First Approach</h3>
             <p className="text-gray-600">
-              Every decision we make starts with what's best for pets and their families.
+              Every decision we make starts with what&apos;s best for pets and their families.
             </p>
           </div>
           <div className="text-center">
